@@ -1,0 +1,20 @@
+# Contributor: fazibear <fazibear@gmail.com>
+pkgname=nautilus-dropbox
+pkgver=0.5.0
+pkgrel=1
+pkgdesc="Dropbox for Linux"
+arch=('i686' 'x86_64')
+url="http://www.getdropbox.com/beta"
+license=('custom')
+depends=('gtk2' 'libnotify' 'nautilus')
+source=("https://www.getdropbox.com/download?dl=packages/nautilus-dropbox-${pkgver}.tar.bz2")
+md5sums=('9a9750d89b7f6265f8b23913a6d5bac0')
+build() {
+  cd "${startdir}/src/nautilus-dropbox-${pkgver}/"
+  ./configure
+  make || return 1
+  make install DESTDIR=$startdir/pkg
+  msg "Restart nautilus with 'killall -9 nautilus'"
+  msg "If you don't see dropbox icon delete ~/.drobpox and ~/.dropbox-dist and restart nautilus"
+}
+# vim:set ts=2 sw=2 et:

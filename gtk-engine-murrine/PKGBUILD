@@ -1,0 +1,98 @@
+# Contributor: detto <detto-brumm@freenet.de>
+pkgname=gtk-engine-murrine
+pkgver=0.20
+pkgrel=1
+pkgdesc="GTK2 engine to make your desktop look like a 'murrina', an italian word meaning the art glass works done by Venicians glass blowers."
+url="http://cimi.netsons.org"
+depends=('gtk2' 'cairo')
+makedepends=('pkgconfig')
+conflicts=('gtk-murrine-engine')
+
+source=(http://cimi.netsons.org/media/download_gallery/murrine/murrine-$pkgver.tar.bz2 \
+	http://cimi.netsons.org/media/download_gallery/MurrinaVerdeOlivo.tar.bz2 \
+	http://cimi.netsons.org/media/download_gallery/MurrinaAquaIsh.tar.bz2 \
+	http://cimi.netsons.org/media/download_gallery/MurrinaGilouche.tar.bz2 \
+	http://cimi.netsons.org/media/download_gallery/MurrinaLoveGray.tar.bz2 \
+	http://cimi.netsons.org/media/download_gallery/MurrineThemePack.tar.bz2 \
+	http://www.gnome-look.org/content/files/43171-MurrinaGraphite.tar.gz \
+	http://mitglied.lycos.de/archl/MurrinaCool.tar \
+	http://www.gnome-look.org/content/files/46287-Murrina-Black.tar.bz2 \
+	http://www.gnome-look.org/content/files/45896-Murrina-GT4.tar.bz2 \
+	http://www.gnome-look.org/content/files/44153-Xubuntu-Murrina.tar.gz \
+	http://www.gnome-look.org/content/files/45384-MurrinaLightBlue.tar.gz \
+	http://www.gnome-look.org/content/files/43282-MurrinaGperfection.tar.gz \
+	http://www.gnome-look.org/content/files/43230-MurrinaMissy.tar.bz2 \
+	http://www.gnome-look.org/content/files/43197-MurrinaEssenseColorpack.tar.gz \
+	http://www.gnome-look.org/content/files/43219-MurrinaDrear.tar.gz \
+	http://www.gnome-look.org/content/files/43314-MurrinaGray.tar.gz \
+	http://www.gnome-look.org/content/files/43590-MurrinaElegant.tar.gz \
+	http://www.gnome-look.org/content/files/43587-MurrinaHuman.tar.gz \
+	http://www.gnome-look.org/content/files/43333-Murrina-GreenMod.tar.bz2 \
+	http://www.gnome-look.org/content/files/45325-MurrinaRose.tar.gz \
+	http://www.gnome-look.org/content/files/45482-MurrinaAngelicGreen.tar.gz \
+	http://www.gnome-look.org/content/files/46238-MurrinaBlackBlue.tar.gz \
+	http://www.gnome-look.org/content/files/45430-Murrina-Greygreen.tar.gz \
+	http://www.gnome-look.org/content/files/45439-Murrina-Darkthemes.tar.gz \
+	http://mitglied.lycos.de/archl/Murrina-Eternal_Blue.tar.gz \
+	http://mitglied.lycos.de/archl/Murrina-Eternal_Red.tar.gz \
+	http://mitglied.lycos.de/archl/Murrina_Red.tar.gz \
+	http://www.gnome-look.org/content/files/46921-MurrinaMeoW.tar.gz \
+	http://www.gnome-look.org/content/files/47132-MurrinaBlue.tar.gz \
+	http://cimi.netsons.org/media/download_gallery/MurrineXfwm.tar.bz2 \
+	http://cimi.netsons.org/media/download_gallery/MurrinaFancyCandy.tar.bz2 \
+	http://www.gnome-look.org/content/files/47274-Murrina-Novum.tar.gz \
+	http://www.gnome-look.org/content/files/47262-MurrinaShiroi.tar.gz \
+	http://www.gnome-look.org/content/files/47466-MurrinaCandyDuo.tar.bz2)
+
+md5sums=('a1bd84400f3852d2bf4f86063349e093' '18c5c17918b8314e2b5d3686d8df50f4'\
+         '889eba66a5ecb57b8ab7a787063aa3fb' 'ca8c600704b0c49dd6b2269b07e63f9a'\
+         '1e6753a2be7ce569be9f9f7b5fa1de75' 'd37e19adcc912ffa9760c6c3c3e3d252'\
+         'd80d399edc6e3087783b518adcd5c844' '4465fc7c4b7d5a630adc249d3f7142af'\
+         'c202333925960b9a7244507dc89adc6c' 'ecee81e1723d0022e29dca5d4968aea8'\
+         '0587d7c6086ab44bd47981655b34b02a' '7be4f07934691b6cc9609bbc7c378a7c'\
+         '99cf68e9257ccfdaea91ecd1073ad9b6' 'e50854ece792c8253c10887786a77f06'\
+         '4328e227272e61298d09b1853bda9ca9' '7502e4997e6eb3862a9d124ebe761814'\
+         'a0e7adc0b5052bcd1091b222c76de68c' '9e048b16e4f84c5ea5e0a7600808ab49'\
+         '918ec44ac0d19e93300ce873243a2de9' 'a189cecd1c4c2d51c8ebbd77f5beb95a'\
+         '3ce7de38f0c23acf077ac541528d0548' '0ca0f53c2bd6019c54ef1dfe5534061c'\
+         'e5cbb6b9e047befa68d7640173758731' '17d31633e21ddc78aa53b1128fbbeef4'\
+         'a18bada35425f3962b48705f4ca0e5e8' '64204033f05bb25d8b6a31d5c3417741'\
+	 '0344d4afe5c1a1cee04b7aa9e2ccfeb3' '11f358407acb9a0eb8ca827cb8b378b6'\
+	 '0cedb6b529f0d034a51306fceebcb895' 'd3c9e1ed30abe891fdd5767246061952' \
+	 'f3b69e670c95639fc96d8a9ace7d36d5' '4f8d47fe82284932eb2a9044a5a4eccc' \
+	 'e4ba8338c4364ee128411b99a24359a2' '9c800279545dfe7f39afa13e9902a6e5' \
+	 '8f2d7add8317106b0e19a00ab6b7e2cb')
+
+build() {
+
+# build the gtk engine
+  cd $startdir/src/murrine-$pkgver
+  ./configure --prefix=/usr --enable-animation
+  make || return 1
+  make DESTDIR=$startdir/pkg install
+
+# prepare source dir for simple copying
+  rm -rf $startdir/src/*.tar*
+  mkdir -p $startdir/pkg/usr/share/themes
+  cp -r $startdir/src/Murrina* $startdir/src/Xubuntu-Murrina $startdir/src/./.themes/Murrina-Black $startdir/pkg/usr/share/themes
+
+# remove old copies from theme files, index.theme files that seem to be broken
+# and README's and the like.
+  find $startdir/pkg/ -iname index.theme* -exec rm {} \;
+  find $startdir/pkg/ -iname '*~' -exec rm {} \;
+  rm $startdir/pkg/usr/share/themes/MurrinaShiroi/gtk-2.0/elegant.gtkrc
+  rm $startdir/pkg/usr/share/themes/MurrinaShiroi/gtk-2.0/ubuntu.gtkrc
+  find $startdir/pkg/ -iname README* -exec rm {} \;
+  rm $startdir/pkg/usr/share/themes/MurrinaGray/README.txt
+  find $startdir/pkg/ -iname gpl.txt -exec rm {} \;
+
+# put metacity and xfwm theme files into the right folders under /opt/gnome and /opt/xfce instead /usr/share
+  mkdir -p $startdir/pkg/opt/gnome/share/themes/Murrine/metacity-1
+  cp $startdir/src/MurrinaAngelicGreen/metacity-1/metacity-theme-1.xml $startdir/pkg/opt/gnome/share/themes/Murrine/metacity-1/
+  rm -rf $startdir/pkg/usr/share/themes/MurrinaAngelicGreen/metacity-1/
+  rm -rf $startdir/pkg/usr/share/themes/MurrinaShiroi/metacity-1/
+
+  mkdir -p $startdir/pkg/opt/xfce4/share/themes/Murrine/xfwm4
+  cp $startdir/src/Murrine/xfwm4/* $startdir/pkg/opt/xfce4/share/themes/Murrine/xfwm4/
+  rm -rf $startdir/pkg/usr/share/themes/Murrine/
+}

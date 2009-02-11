@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# Secure decrypt/view script based on Miguel's script
+# http://primates.ximian.com/~miguel/tmp/editpass
+
+FN="$1"
+
+if [ "x$FN" = x ]
+then
+    FN=/home/mdk/.personal
+else
+    xxx="`basename "$FN" .asc`"
+    if [ ! "$xxx" = "$FN" ] ; then FN="$xxx"; fi
+fi
+
+EFN="${FN}.asc"
+
+# test -f $FN && wipe -f $FN
+gpg -o $FN -d $EFN
+if [ $? -eq 0 ]
+then
+    touch -r $EFN $FN
+    vi -R -c 'set nobackup' $FN
+    echo "Removing $FN..."
+    for ((i=0;i<=4;i+=1)); do
+        dd if=/dev/zero of=$FN count=1 bs=`stat -c '%s' $FN` status=noxfer
+    done
+    rm -f $FN
+fi
+
+unset FN EFN
+

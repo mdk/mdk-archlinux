@@ -1,0 +1,24 @@
+pkgname=ephydeli
+pkgver=0.2
+pkgrel=3
+pkgdesc="Epiphany extension for delicious"
+url="http://www.burtonini.com/blog/computers/ephydeli-2006-08-29-21-40"
+license="GPL"
+depends=('python' 'epiphany')
+makedepends=()
+conflicts=()
+replaces=()
+backup=()
+install=
+source=("http://burtonini.com/computing/$pkgname-$pkgver.tar.gz")
+md5sums=()
+arch=('i686')
+
+build() {
+  cd $startdir/src/$pkgname-$pkgver
+  mkdir -p $startdir/pkg/usr/lib/epiphany/2.20/extensions
+  cp * $startdir/pkg/usr/lib/epiphany/2.20/extensions
+  rm -f $startdir/pkg/usr/lib/epiphany/2.20/extensions/README
+  rm -f $startdir/pkg/usr/lib/epiphany/2.20/extensions/COPYING
+  rm -f $startdir/pkg/usr/lib/epiphany/2.20/extensions/Makefile
+}

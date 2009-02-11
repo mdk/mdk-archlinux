@@ -1,0 +1,28 @@
+pkgname=mod-fcgi
+pkgver=2.4.2
+pkgrel=1
+pkgdesc="FCGI module for apache"
+url="http://www.fastcgi.com"
+license="GPL"
+depends=(apache)
+makedepends=()
+conflicts=()
+replaces=()
+backup=()
+install=
+source=("http://www.fastcgi.com/dist/mod_fastcgi-$pkgver.tar.gz" \
+	'patch.diff' \
+	'Makefile.diff')
+
+build() {
+  cd $startdir/src/mod_fastcgi-$pkgver
+  patch -p1 < ../patch.diff
+  cp Makefile.AP2 Makefile
+  patch -p0 < ../Makefile.diff
+
+  apxs -o mod_fastcgi.so -c *.c
+
+  mkdir -p $startdir/pkg/usr/lib/apache
+  cp .libs/mod_fastcgi.so $startdir/pkg/usr/lib/apache/
+  chmod 644 $startdir/pkg/usr/lib/apache/mod_fastcgi.so
+}

@@ -1,0 +1,21 @@
+pkgname=encode-nokia
+pkgver=0.0.1
+pkgrel=1
+pkgdesc="Script to encode videos into nokia n800 playable format"
+url="http://www.mdk.org.pl"
+license="GPL"
+depends=(mplayer)
+makedepends=()
+conflicts=()
+replaces=()
+backup=()
+install=
+source=('encode-nokia-low' 'encode-nokia-high')
+arch=('i686')
+
+build() {
+  cd $startdir/src/
+  mkdir -p $startdir/pkg/usr/bin/
+  cp encode-nokia-low $startdir/pkg/usr/bin
+  cp encode-nokia-high $startdir/pkg/usr/bin
+}

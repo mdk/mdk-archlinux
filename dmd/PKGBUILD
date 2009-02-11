@@ -1,0 +1,27 @@
+# Contributor: Andrew O'Neil <ajoneil@gmail.com>
+pkgname=dmd
+pkgver=0.177
+pkgrel=1
+pkgdesc="Digital Mars D Compiler"
+url="http://digitalmars.com/d/"
+depends=('gcc')
+source=("http://ftp.digitalmars.com/dmd.${pkgver/0./}.zip" 'dmd.conf')
+md5sums=('ba8b1063c04549a258d5f10ed9532e7b' '706b2f62da4c9dce2a8975db48ddebd1')
+
+build() {
+	cd $startdir/pkg/
+	mkdir -p usr/bin usr/lib usr/include etc
+
+	cd $startdir/src/dmd/bin
+	chmod a+x dmd dumpobj obj2asm
+	mv dmd dumpobj obj2asm $startdir/pkg/usr/bin/
+	
+	cd $startdir/src/dmd/lib
+	mv libphobos.a $startdir/pkg/usr/lib/
+	
+	cd $startdir/src/dmd/src/
+	mv phobos $startdir/pkg/usr/include/phobos
+
+	cd $startdir/src/
+	mv dmd.conf $startdir/pkg/etc/
+}

@@ -1,0 +1,21 @@
+pkgname=darklime-theme
+pkgver=0.1
+pkgrel=1
+pkgdesc="Darklime clearlooks theme"
+url="http://art.gnome.org/themes/gtk2/1364"
+license="GPL"
+depends=('gtk2')
+makedepends=()
+conflicts=()
+replaces=()
+backup=()
+install=
+source=("http://art.gnome.org/download/themes/gtk2/1364/GTK2-ClearlooksDarkLime.tar.gz")
+md5sums=()
+arch=('i686')
+
+build() {
+  cd $startdir/src/Clearlooks-DarkLime/gtk-2.0
+  mkdir -p $startdir/pkg/usr/share/themes/darklime/gtk-2.0
+  cp * $startdir/pkg/usr/share/themes/darklime/gtk-2.0
+}

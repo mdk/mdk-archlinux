@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+
+# Michael Dominic Kostrzewa <mdk@mdk.am>
+
+# Executes the bzr status command and prints the entries
+# into ChangeLog-like format for easy editing.
+#
+# Use in vim with !r bzr2changelog.rb to paste a nice summary
+# into ChangeLog.
+
+# Customize here
+name="Michael Dominic Kostrzewa"
+email="michael.kostrzewa@nokia.com"
+
+ary = []
+adding = false
+renamed = false
+`bzr st`.each { |line|
+  if line.index(':')
+    if line =~ /^added/ or line =~ /^removed/ or line =~ /^renamed/ or line =~ /^modified/
+      adding = true
+      if line =~ /^renamed/
+        renamed = true
+      else
+        renamed = false
+      end
+    else 
+      adding = false
+    end
+  else
+    ary << line.chomp if adding and not renamed
+    ary << line.chomp.scan(/(.*?)\s=>/)[0][0] if adding and renamed
+  end
+}
+
+# Sort the entries
+ary = ary.sort
+
+# Print the header
+print Time.now.strftime("%Y-%m-%d") + "  " + name + "  " + "<" + email + ">" " \n\n"
+
+# Print all the entries
+ary.each do |line|
+  print "\t* " + line + ":\n"
+end
+
+print "\n"

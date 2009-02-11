@@ -1,0 +1,20 @@
+pkgname=cg-toolkit
+pkgver=1.5.0
+pkgrel=1
+pkgdesc="CG toolkit from nvidia"
+url="http://developer.nvidia.com/object/cg_toolkit.html"
+license="LGPL"
+depends=('glib' 'xorg')
+makedepends=('gcc' 'autoconf' 'automake' 'libtool' 'mono')
+conflicts=()
+replaces=()
+backup=()
+install=
+source=('http://developer.download.nvidia.com/cg/Cg_1.5/1.5.0/0019/Cg-1.5_Feb2007_x86.tar.gz')
+d5sums=()
+arch=('i686')
+
+build() {
+  cd $startdir/src/
+  mv usr $startdir/pkg/
+}

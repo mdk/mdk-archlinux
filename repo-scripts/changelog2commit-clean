@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+
+# Michael Dominic K. <mdk@mdk.am>
+
+# Scans the last ChangeLog entry and extracts
+# just the intersting string part. Each separate change group
+# (from the ChangeLog) is put into one line
+
+str = ""
+has_starter = false
+file = File.open("ChangeLog", "r")
+
+file.each { |line|
+  if /\d+-\d+-\d+/ =~ line
+    break if has_starter
+    has_starter = true
+  else
+    str = str + line if has_starter
+  end
+}
+
+# First let's split it into chunks
+chunks = []
+chunks = str.split(/\n\s*\n/)
+
+chunks.each { |chunk|
+  chunk.gsub!(/\s*\*.*:/, "")
+  chunk.gsub!(/\n\s*/, "\s")
+  chunk.gsub!(/^\s\s*/, "");
+  puts chunk
+}

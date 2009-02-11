@@ -1,0 +1,24 @@
+pkgname=gobject-generate
+pkgver=0.0.1
+pkgrel=1
+pkgdesc="Scripts to generate gobjects and g-related structures."
+url="http://www.mdk.org.pl"
+license="GPL"
+depends=(ruby)
+makedepends=()
+conflicts=(gobject-generator)
+replaces=(gobject-generator)
+backup=()
+install=
+source=('gboxed-generate' 'ginterface-generate' 'gobject-generate' 'xg-xboxed.c' 'xg-xboxed.h'
+        'xg-xinterface.c' 'xg-xinterface.h' 'xg-xobject-private.h' 'xg-xobject.c' 'xg-xobject.h')
+arch=('i686')
+
+build() {
+  cd $startdir/src/
+  mkdir -p $startdir/pkg/usr/bin/
+  mkdir -p $startdir/pkg/usr/share/gobject-generate/
+  cp *-generate $startdir/pkg/usr/bin
+  cp *.c $startdir/pkg/usr/share/gobject-generate
+  cp *.h $startdir/pkg/usr/share/gobject-generate
+}

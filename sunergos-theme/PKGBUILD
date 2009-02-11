@@ -1,0 +1,24 @@
+pkgname=sunergos-theme
+pkgver=0.0.3
+pkgrel=1
+pkgdesc="Sunergos GDM theme from gnome-look"
+url="http://www.gnome-look.org/content/show.php?content=43138"
+license="GPL"
+depends=()
+makedepends=()
+conflicts=()
+replaces=()
+backup=()
+install=
+source=()
+md5sums=('1d3931ae9fd37844ca60466caafd9ccb')
+arch=('i686')
+
+build() {
+  cd $startdir/src
+  wget "http://www.gnome-look.org/content/download.php?content=43138&id=1" -O surgeos.tar.gz
+  tar xzf surgeos.tar.gz
+  cd SunergosSimple
+  mkdir -p $startdir/pkg/usr/share/gdm/themes/surgeos
+  cp * $startdir/pkg/usr/share/gdm/themes/surgeos
+}

@@ -1,0 +1,21 @@
+pkgname=secure-scripts
+pkgver=0.0.2
+pkgrel=1
+pkgdesc="Scripts to securely edit some files"
+url="http://www.mdk.org.pl"
+license="GPL"
+depends=(gnupg vi)
+makedepends=()
+conflicts=()
+replaces=()
+backup=()
+install=
+source=('secure-edit' 'secure-view')
+arch=('i686')
+
+build() {
+  cd $startdir/src/
+  mkdir -p $startdir/pkg/usr/bin/
+  cp secure-edit $startdir/pkg/usr/bin
+  cp secure-view $startdir/pkg/usr/bin
+}

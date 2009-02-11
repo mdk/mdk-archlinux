@@ -1,0 +1,49 @@
+# Maintainer: Selman Ulug <selman.ulug@gmail.com>
+# Contributor: Andrew O'Neil <ajoneil@gmail.com>
+
+pkgname=gdc-svn
+pkgver=86
+_snapshot=4.1-20061215
+pkgrel=1
+pkgdesc="D Language frontend for gcc"
+url="http://dgcc.sourceforge.net"
+depends=('gcc>=4.1.2')
+conflicts=('gdc-svn')
+replaces=('gdc-svn')
+source=(ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-core-${_snapshot}.tar.bz2)
+options=('nolibtool' 'noemptydirs')
+md5sums=('385984a5a60ed35535274f9f26f91ad1')
+
+_svntrunk=https://svn.sourceforge.net/svnroot/dgcc/branches/gdc-0.22-dev
+_svnmod=dgcc
+
+build() {
+
+  cd $startdir/src
+
+  svn co $_svntrunk --config-dir ./ -r $pkgver $_svnmod
+  cp -r $startdir/src/dgcc/d $startdir/src/gcc-${_snapshot}/gcc
+  cd $startdir/src/gcc-${_snapshot}
+  ./gcc/d/setup-gcc.sh
+  
+  export MAKEFLAGS="-j1"
+  # Don't install libiberty 
+  sed -i 's/install_to_$(INSTALL_DEST) //' libiberty/Makefile.in
+  # Don't run fixincludes
+  sed -i -e 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
+  mkdir ../gcc-build
+  cd ../gcc-build
+
+  ../gcc-${_snapshot}/configure --prefix=/usr --enable-shared \
+     --enable-languages=d --enable-threads=posix \
+     --enable-__cxa_atexit  \
+     --libdir=/usr/lib --disable-multilib 
+  make || return 1
+  make DESTDIR=${startdir}/pkg install || return 1
+  GCCLIST=(`pacman -Ql gcc | grep -v '/$' | sed -e 's/\.gz$//' | awk '{ print $2
+ }'`)
+  for GCC in "${GCCLIST[@]}"; do
+    rm -f "${startdir}/pkg/${GCC}"
+  done
+}
+

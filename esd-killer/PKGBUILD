@@ -1,0 +1,19 @@
+pkgname=esd-killer
+pkgver=0.0.3
+pkgrel=1
+pkgdesc="An init script to kill ESD on init/start"
+url="http://www.mdk.org.pl"
+license="GPL"
+depends=()
+makedepends=()
+conflicts=()
+replaces=()
+backup=()
+install=
+source=('esdkiller')
+
+build() {
+  cd $startdir/src/
+  mkdir -p $startdir/pkg/etc/rc.d
+  cp esdkiller $startdir/pkg/etc/rc.d/
+}

@@ -1,0 +1,92 @@
+#!/usr/bin/env ruby
+
+@@module_name = "Hildon"
+@@namespace = "Hildon"
+@@boxed_name = "Rectangle"
+
+def underscorize(str)
+  out = ""
+  first = true
+  str.each_byte { |byte| 
+    if byte.chr.swapcase == byte.chr.downcase and not first
+      out = out + "_" + byte.chr
+    else
+      out = out + byte.chr
+    end
+    first = false
+  }
+
+  return out
+end
+
+def minusize(str)
+  out = ""
+  first = true
+  str.each_byte { |byte| 
+    if byte.chr.swapcase == byte.chr.downcase and not first
+      out = out + "-" + byte.chr
+    else
+      out = out + byte.chr
+    end
+    first = false
+  }
+
+  return out
+end
+
+def substitute(stream)
+
+  stream.gsub!("XG_XBOXED", underscorize(@@namespace).upcase + "_" + underscorize(@@boxed_name).upcase)
+  stream.gsub!("Xg_Xboxed", underscorize(@@namespace) + "_" + underscorize(@@boxed_name));
+  stream.gsub!("XgXboxed", @@namespace + @@boxed_name);
+  stream.gsub!("xg_xboxed", underscorize(@@namespace).downcase + "_" + underscorize(@@boxed_name).downcase)
+  stream.gsub!("xg-xboxed", minusize(@@namespace).downcase + "-" + minusize(@@boxed_name).downcase)
+  stream.gsub!("XG_TYPE", underscorize(@@namespace).upcase + "_TYPE")
+  stream.gsub!("XG", underscorize(@@namespace).upcase)
+  stream.gsub!("XBOXED", underscorize(@@boxed_name).upcase)
+  stream.gsub!("XName", @@module_name)
+
+  return stream
+end
+
+def dofile(input, output)
+  f = File.new(input, "rb")
+  data = f.read
+  data = substitute(data)
+  len = 0;
+  out = File.new(output, "w");
+  data.each_line { |line|
+
+    next if line == ""
+
+    if line.index("___align___") == 0 then
+      str = ""
+      for num in (1..len)
+        str = str + " "
+      end
+      line.gsub!("___align___", str)
+    else
+      first = line.split(' ') [0]
+      len = first.length if first != nil
+    end
+
+    out.puts "#{line}"
+  }
+
+end
+
+# Read the input
+puts  "GBoxed magic generate!"
+
+print "Enter the module name [ie. Hildon]               : "
+@@module_name = gets.gsub!("\n", "")
+
+print "Enter the namespace [ie. Hildon]                 : "
+@@namespace = gets.gsub!("\n", "")
+
+print "Enter the boxed name [ie. Rectangle]             : "
+@@boxed_name = gets.gsub!("\n", "")
+
+dofile("/usr/share/gobject-generate/xg-xboxed.c", "#{minusize(@@namespace).downcase}-#{minusize(@@boxed_name).downcase}.c")
+dofile("/usr/share/gobject-generate/xg-xboxed.h", "#{minusize(@@namespace).downcase}-#{minusize(@@boxed_name).downcase}.h")
+

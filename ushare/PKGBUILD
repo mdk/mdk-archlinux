@@ -1,0 +1,22 @@
+pkgname=ushare
+pkgver=0.9.7
+pkgrel=2
+pkgdesc="UShare upnp server"
+url="http://ushare.geexbox.org/"
+license="GPL"
+depends=('glib' 'xorg' 'libupnp')
+makedepends=('gcc' 'autoconf' 'automake' 'libtool')
+conflicts=()
+replaces=()
+backup=()
+install=
+source=("http://ushare.geexbox.org/releases/$pkgname-$pkgver.tar.bz2" "ushare.patch")
+md5sums=()
+
+build() {
+  cd $startdir/src/$pkgname-$pkgver
+  patch -p0 < ../ushare.patch
+  ./configure --prefix=/usr || return 1
+  make || return 1
+  make DESTDIR=$startdir/pkg install-strip
+}

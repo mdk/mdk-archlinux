@@ -1,0 +1,16 @@
+#!/bin/bash
+#Encode files for nokia device
+
+LOG="-passlogfile /tmp/nokia-divx2pass.log"
+rm $LOG
+
+RESIZE="-sws 9 -vf scale=400:240"
+AUDIO="-oac mp3lame -lameopts cbr:br=96"
+VIDEO="-ovc lavc -lavcopts"
+VIDOPTS1="vcodec=mpeg4:vbitrate=400:autoaspect:vpass=1 -ffourcc DIVX -idx"
+VIDOPTS2="vcodec=mpeg4:vbitrate=400:autoaspect:vpass=2 -ffourcc DIVX -idx"
+SOURCE=$1
+OUTPUT="${SOURCE%.mpg}.nokia.avi" # Change .ext to .nokia.avi
+nice -n 15 mencoder $SOURCE $RESIZE $AUDIO $VIDEO $VIDOPTS1 $LOG -o /dev/null
+nice -n 15 mencoder $SOURCE $RESIZE $AUDIO $VIDEO $VIDOPTS2 $LOG -o $OUTPUT
+

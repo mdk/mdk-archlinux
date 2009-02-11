@@ -1,0 +1,20 @@
+pkgname=x61-no-blue
+pkgver=0.0.1
+pkgrel=1
+pkgdesc="An init script to switch-off bluetooth in x61."
+url="http://www.mdk.org.pl"
+license="GPL"
+depends=()
+makedepends=()
+conflicts=()
+replaces=()
+backup=()
+install=
+source=('no-blue')
+arch=('i686')
+
+build() {
+  cd $startdir/src/
+  mkdir -p $startdir/pkg/etc/rc.d
+  cp no-blue $startdir/pkg/etc/rc.d/
+}

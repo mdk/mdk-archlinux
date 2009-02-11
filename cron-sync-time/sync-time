@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# Sync time to one of the finnish servers
+
+ntpdate 1.fi.pool.ntp.org

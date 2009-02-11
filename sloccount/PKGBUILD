@@ -1,0 +1,22 @@
+# Contributor: Christof Musik <christof@senfdax.de>
+pkgname=sloccount
+pkgver=2.26
+pkgrel=1
+pkgdesc="Tools for counting physical Source Lines of Code"
+url="http://www.dwheeler.com/sloccount/"
+license="GPL"
+depends=(glibc)
+makedepends=()
+conflicts=()
+replaces=()
+backup=()
+install=
+source=(http://www.dwheeler.com/sloccount/$pkgname-$pkgver.tar.gz)
+md5sums=('09abd6e2a016ebaf7552068a1dba1249')
+
+build() {
+  cd $startdir/src/$pkgname-$pkgver
+  mkdir -p $startdir/pkg/usr/bin
+  make PREFIX=$startdir/pkg/usr install
+}
+

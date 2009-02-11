@@ -1,0 +1,31 @@
+pkgname=repo-scripts
+pkgver=0.0.6
+pkgrel=1
+pkgdesc="Ruby scripts to generate changelog/svn/bzr entries"
+url="http://www.mdk.org.pl"
+license="GPL"
+depends=(ruby)
+makedepends=()
+conflicts=(svn-scripts)
+replaces=(svn-scripts)
+backup=()
+arch=('i686')
+install=
+source=('svn2changelog' \
+        'svn2changelog-nokia' \
+        'bzr2changelog' \
+        'bzr2changelog-nokia' \
+        'changelog2commit-last' \
+        'changelog2commit-clean')
+
+build() {
+  cd $startdir/src/
+  mkdir -p $startdir/pkg/usr/bin/
+  cp svn2changelog $startdir/pkg/usr/bin/
+  cp git2changelog $startdir/pkg/usr/bin/
+  cp svn2changelog-nokia $startdir/pkg/usr/bin/
+  cp bzr2changelog $startdir/pkg/usr/bin/
+  cp bzr2changelog-nokia $startdir/pkg/usr/bin/
+  cp changelog2commit-last $startdir/pkg/usr/bin/
+  cp changelog2commit-clean $startdir/pkg/usr/bin/
+}

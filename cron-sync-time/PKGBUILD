@@ -1,0 +1,22 @@
+pkgname=auto-sync-time
+pkgver=0.0.1
+pkgrel=2
+pkgdesc="A script to sync time with auto one-day cron thingie"
+url="http://www.mdk.org.pl"
+license="GPL"
+depends=(bash)
+makedepends=()
+conflicts=(sync-time)
+replaces=()
+backup=()
+install=cron.install
+source=('sync-time')
+arch=('i686')
+
+build() {
+  cd $startdir/src/
+  mkdir -p $startdir/pkg/usr/bin/
+
+  cp sync-time $startdir/pkg/usr/bin
+  chmod 0740 $startdir/pkg/usr/bin/sync-time
+}

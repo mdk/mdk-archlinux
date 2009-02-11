@@ -1,0 +1,38 @@
+# Contributor: Alexander Fehr <pizzapunk gmail com>
+
+# Change this to proper kernel release
+_kernver=`uname -r`
+
+pkgname=vmware-player-modules
+pkgver=2.0.0_45731
+pkgrel=3
+pkgdesc="Kernel modules for VMware Player"
+arch=('i686')
+url="http://www.vmware.com/products/player/"
+license=('custom')
+depends=('kernel26')
+conflicts=('vmware-workstation-modules' 'vmware-server-modules')
+install=$pkgname.install
+source=(http://download3.vmware.com/software/vmplayer/VMware-player-2.0.0-45731.i386.tar.gz \
+        http://platan.vc.cvut.cz/ftp/pub/vmware/vmware-any-any-update113.tar.gz)
+md5sums=('090b02f6a49dd3a4e8617f68e1d2dc7b' \
+         'cb3f91f2196778e6d76d5a6697286d04')
+
+build() {
+  cd $startdir/src/vmware-player-distrib/lib/modules/source
+  cp $startdir/src/vmware-any-any-update113/vmnet.tar .
+
+  # Build and install the kernel modules
+  for module in vmmon vmblock vmnet; do
+    tar xf $module.tar
+    make -C $module-only HEADER_DIR=/lib/modules/$_kernver/build/include VMWARE_VER=VME_V6 || return 1
+    install -D -m644 $module-only/$module.ko $startdir/pkg/lib/modules/$_kernver/misc/$module.ko
+  done
+
+  # License
+  mkdir -p $startdir/pkg/usr/share/licenses/$pkgname
+  install -m644 $startdir/src/vmware-player-distrib/doc/{EULA,open_source_licenses.txt} \
+    $startdir/pkg/usr/share/licenses/$pkgname
+
+  sed -i -e "s/KERNEL_VERSION='.*'/KERNEL_VERSION='$_kernver'/" $startdir/$pkgname.install
+}

@@ -1,0 +1,15 @@
+--- src/cds.c	2006-11-20 21:31:22.000000000 +0200
++++ src/cds.c.orig	2006-11-20 21:30:27.000000000 +0200
+@@ -300,10 +300,10 @@
+ 
+     upnp_add_response (event, SERVICE_CDS_DIDL_RESULT, out->buf);
+     sprintf (tmp, "%d", result_count);
+-    upnp_add_response (event, SERVICE_CDS_DIDL_NUM_RETURNED, tmp);
++    upnp_add_response (event, SERVICE_CDS_DIDL_NUM_RETURNED, "1");
+     
+     sprintf (tmp, "%d", entry->child_count);
+-    upnp_add_response (event, SERVICE_CDS_DIDL_TOTAL_MATCH, tmp);
++    upnp_add_response (event, SERVICE_CDS_DIDL_TOTAL_MATCH, "1");
+   }
+ 
+   return result_count;

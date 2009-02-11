@@ -1,0 +1,30 @@
+pkgname=mt-daapd
+pkgver=0.2.4
+pkgrel=4
+pkgdesc=""
+url="http://www.firefly.org"
+license="LGPL"
+depends=('gdbm' 'libid3tag' 'libogg' 'libvorbis' 'libvorbis')
+makedepends=('gcc' 'autoconf' 'automake' 'libtool')
+conflicts=()
+replaces=()
+backup=()
+install=
+source=('http://ovh.dl.sourceforge.net/sourceforge/mt-daapd/mt-daapd-0.2.4.tar.gz' 'mtdaapd')
+md5sums=()
+arch=('i686')
+
+build() {
+  cd $startdir/src/
+  cd mt-daapd-0.2.4
+  ./configure --prefix=/usr --enable-oggvorbis
+  make || return 1
+  make DESTDIR=$startdir/pkg/ install
+  mkdir -p $startdir/pkg/etc
+  cp contrib/mt-daapd.conf $startdir/pkg/etc
+  cp contrib/mt-daapd.playlist $startdir/pkg/etc
+  cd ..
+  mkdir -p $startdir/pkg/etc/rc.d
+  cp mtdaapd $startdir/pkg/etc/rc.d
+  mkdir -p $startdir/pkg/var/cache/mt-daapd
+}

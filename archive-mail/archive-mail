@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+
+# Michael Dominic K. <mdk@mdk.am>
+
+# Archives maildir-format like messages
+
+# Customize here
+@days_count = 30
+@home_dir = ENV['HOME']
+@archived = []
+
+def scan_directory (name)
+  print "Scanning #{name} ...\n"
+  dir = Dir.new(name)
+  dir.each { |entry|
+
+    next if entry == "."
+    next if entry == ".."
+    next if entry == "new" 
+    next if entry == "archive"
+
+    if File.stat("#{name}/#{entry}").directory?
+      scan_directory("#{name}/#{entry}") 
+    elsif File.stat("#{name}/#{entry}").mtime.to_i < Time.now.to_i - (60 * 60 * 24 * @days_count)
+      @archived << "#{name}/#{entry}"
+    end
+  }
+end
+
+scan_directory("#{@home_dir}/mail")
+
+print "Copying messages out...\n"
+@archived.each { |file|
+  source = file
+  dest = File.dirname(file.gsub("#{@home_dir}/mail", "#{@home_dir}/mail/archive"))
+  if not FileTest.exists?(dest)
+    `mkdir -p #{dest}`
+  end
+  `cp -f --preserve #{source} #{dest}`
+  `rm -f #{source}`
+}
+
+print "Archived #{@archived.length} messages!\n"

@@ -1,0 +1,27 @@
+# Contributor: William Rea <sillywilly@gmail.com>
+pkgname=mugshot
+pkgver=1.1.37
+pkgrel=1
+pkgdesc="A program to facilitate social networking"
+url="http://mugshot.org"
+options=('NOEMPTYDIRS')
+depends=('loudmouth' 'dbus' 'gtk2' 'curl' 'gconf' 'libxss')
+source=(http://download.mugshot.org/client/sources/linux/mugshot-$pkgver.tar.gz)
+install=$pkgname.install
+
+build() {
+  cd $startdir/src/mugshot-$pkgver
+  ./configure --prefix=/usr --disable-schemas-install \
+	      --with-gconf-schema-file-dir=/opt/gnome/etc/gconf/schemas \
+              --with-gecko-idl=/opt/mozilla/share/idl/xulrunner \
+              --with-gecko-headers=/opt/mozilla/include/xulrunner \
+              --with-xpidl=/opt/mozilla/lib/xulrunner/xpidl
+
+  make LDFLAGS+="-R/opt/mozilla/lib/xulrunner" || return 1
+  make DESTDIR=$startdir/pkg install
+
+  install -d $startdir/pkg/usr/share/applications
+  mv $startdir/pkg/usr/share/gnome/autostart/mugshot.desktop \
+     $startdir/pkg/usr/share/applications
+  rm -r $startdir/pkg/usr/share/gnome/autostart
+}

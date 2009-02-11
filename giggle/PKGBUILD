@@ -1,0 +1,22 @@
+pkgname=giggle
+pkgver=0.4
+pkgrel=1
+pkgdesc="Giggle gtk git browser"
+url="http://developer.imendio.com/projects/giggle/"
+license="GPL"
+depends=('glib' 'xorg' 'gtk2' 'git')
+makedepends=('gcc' 'autoconf' 'automake' 'libtool')
+conflicts=()
+replaces=()
+backup=()
+install=
+source=('http://ftp.imendio.com/pub/imendio/giggle/src/giggle-0.4.tar.gz')
+md5sums=()
+arch=('i686')
+
+build() {
+  cd $startdir/src/giggle-0.4
+  ./configure --prefix=/usr
+  make || return 1
+  make DESTDIR=$startdir/pkg install
+}

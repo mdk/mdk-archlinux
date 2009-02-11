@@ -1,0 +1,92 @@
+#!/usr/bin/env ruby
+
+@@module_name = "Hildon"
+@@namespace = "Hildon"
+@@interface_name = "ScrollBar"
+
+def underscorize(str)
+  out = ""
+  first = true
+  str.each_byte { |byte| 
+    if byte.chr.swapcase == byte.chr.downcase and not first
+      out = out + "_" + byte.chr
+    else
+      out = out + byte.chr
+    end
+    first = false
+  }
+
+  return out
+end
+
+def minusize(str)
+  out = ""
+  first = true
+  str.each_byte { |byte| 
+    if byte.chr.swapcase == byte.chr.downcase and not first
+      out = out + "-" + byte.chr
+    else
+      out = out + byte.chr
+    end
+    first = false
+  }
+
+  return out
+end
+
+def substitute(stream)
+
+  stream.gsub!("XG_XINTERFACE", underscorize(@@namespace).upcase + "_" + underscorize(@@interface_name).upcase)
+  stream.gsub!("Xg_Xinterface", underscorize(@@namespace) + "_" + underscorize(@@interface_name));
+  stream.gsub!("XgXinterface", @@namespace + @@interface_name);
+  stream.gsub!("xg_xinterface", underscorize(@@namespace).downcase + "_" + underscorize(@@interface_name).downcase)
+  stream.gsub!("xg-xinterface", minusize(@@namespace).downcase + "-" + minusize(@@interface_name).downcase)
+  stream.gsub!("XG_TYPE", underscorize(@@namespace).upcase + "_TYPE")
+  stream.gsub!("XG", underscorize(@@namespace).upcase)
+  stream.gsub!("XINTERFACE", underscorize(@@interface_name).upcase)
+  stream.gsub!("XName", @@module_name)
+
+  return stream
+end
+
+def dofile(input, output)
+  f = File.new(input, "rb")
+  data = f.read
+  data = substitute(data)
+  len = 0;
+  out = File.new(output, "w");
+  data.each_line { |line|
+
+    next if line == ""
+
+    if line.index("___align___") == 0 then
+      str = ""
+      for num in (1..len)
+        str = str + " "
+      end
+      line.gsub!("___align___", str)
+    else
+      first = line.split(' ') [0]
+      len = first.length if first != nil
+    end
+
+    out.puts "#{line}"
+  }
+
+end
+
+# Read the input
+puts  "GInterface magic generate!"
+
+print "Enter the module name [ie. Hildon]               : "
+@@module_name = gets.gsub!("\n", "")
+
+print "Enter the namespace [ie. Hildon]                 : "
+@@namespace = gets.gsub!("\n", "")
+
+print "Enter the interface name [ie. ScrollBar]         : "
+@@interface_name = gets.gsub!("\n", "")
+
+dofile("/usr/share/gobject-generate/xg-xinterface.c", "#{minusize(@@namespace).downcase}-#{minusize(@@interface_name).downcase}.c")
+dofile("/usr/share/gobject-generate/xg-xinterface.h", "#{minusize(@@namespace).downcase}-#{minusize(@@interface_name).downcase}.h")
+

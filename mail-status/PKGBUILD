@@ -1,0 +1,20 @@
+pkgname=mail-status
+pkgver=0.0.1
+pkgrel=1
+pkgdesc="Ruby script to print a colorfull IMAP-synced mail status"
+url="http://www.mdk.org.pl"
+license="GPL"
+depends=(ruby)
+makedepends=()
+conflicts=()
+replaces=()
+backup=()
+install=()
+source=('mail-status')
+arch=('i686')
+
+build() {
+  cd $startdir/src/
+  mkdir -p $startdir/pkg/usr/bin/
+  cp mail-status $startdir/pkg/usr/bin/
+}

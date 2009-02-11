@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+# Michael Dominic K. <mdk@mdk.am>
+
+# Scans the ChangeLog and extracts the last entry
+
+str = ""
+has_starter = false
+file = File.open("ChangeLog", "r")
+
+file.each { |line|
+  if /\d+-\d+-\d+/ =~ line
+    break if has_starter
+    has_starter = true
+  end
+
+  str = str + line if has_starter
+}
+
+puts str

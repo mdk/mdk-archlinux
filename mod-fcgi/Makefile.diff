@@ -1,0 +1,22 @@
+--- Makefile	2006-10-29 12:14:05.000000000 +0200
++++ Makefile.mod	2006-10-29 12:16:01.000000000 +0200
+@@ -4,7 +4,7 @@
+ 
+ builddir     = .
+ 
+-top_dir      = /usr/local/apache2
++top_dir      = /home/httpd
+ 
+ top_srcdir   = ${top_dir}
+ top_builddir = ${top_dir}
+@@ -15,8 +15,8 @@
+ APACHECTL = apachectl
+ 
+ #DEFS=-Dmy_define=my_value
+-#INCLUDES=-Imy/include/dir
+-#LIBS=-Lmy/lib/dir -lmylib
++INCLUDES=-I/usr/include/apache
++LIBS=-L/usr/lib/apache/
+ 
+ all: local-shared-build
+ 

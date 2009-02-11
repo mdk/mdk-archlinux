@@ -1,0 +1,19 @@
+pkgname=archive-mail
+pkgver=0.0.3
+pkgrel=1
+pkgdesc="Ruby script to archive mail from ~/mail to ~/mail/archive/"
+url="http://www.mdk.org.pl"
+license="GPL"
+depends=(ruby)
+makedepends=()
+conflicts=()
+replaces=()
+backup=()
+install=()
+source=('archive-mail')
+
+build() {
+  cd $startdir/src/
+  mkdir -p $startdir/pkg/usr/bin/
+  cp archive-mail $startdir/pkg/usr/bin/
+}

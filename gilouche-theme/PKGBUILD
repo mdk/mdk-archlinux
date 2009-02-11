@@ -1,0 +1,22 @@
+pkgname=gilouche-theme
+pkgver=0.0.1
+pkgrel=2
+pkgdesc="Gilouche theme from SLED"
+url="http://www.novell.com"
+license="GPL"
+depends=()
+makedepends=()
+conflicts=()
+replaces=()
+backup=()
+install=
+source=('gilouche.tar.gz')
+md5sums=('5eaed43bdd0a603f327b48a2f832c568')
+
+build() {
+  cd $startdir/src/Gilouche
+  mkdir -p $startdir/pkg/usr/share/themes/Gilouche
+  mkdir -p $startdir/pkg/opt/gnome/share/themes/Gilouche
+  cp -r * $startdir/pkg/usr/share/themes/Gilouche
+  cp -r * $startdir/pkg/opt/gnome/share/themes/Gilouche
+}
