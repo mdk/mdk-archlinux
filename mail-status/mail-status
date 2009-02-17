@@ -6,6 +6,7 @@
 def parse_dir(dir)
   count = 0
   path = File.join(dir, "new")
+  return -1 unless File.exists?(path)
   Dir.open(path).each { |entry|
     full_name = File.join(path, entry)
     next if File.ftype(full_name) != "file"
@@ -28,6 +29,8 @@ Dir.open(mail_dir).each { |entry|
   next if entry == "." or entry == ".."
 
   count = parse_dir(full_name)
+  next if count == -1
+
   puts "  * #{entry} [\033[1;33m#{count}\033[0m]" if count > 0
 }
 
