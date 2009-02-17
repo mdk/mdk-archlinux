@@ -16,7 +16,7 @@ arch=('i686')
 
 build() {
   cd $startdir/src
-  wget "http://www.gnome-look.org/content/download.php?content=43138&id=1" -O surgeos.tar.gz
+  wget "http://www.gnome-look.org/CONTENT/content-files/43138-SunergosSimple-0.0.1.tar.gz" -O surgeos.tar.gz
   tar xzf surgeos.tar.gz
   cd SunergosSimple
   mkdir -p $startdir/pkg/usr/share/gdm/themes/surgeos
