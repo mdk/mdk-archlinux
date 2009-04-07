@@ -1,6 +1,6 @@
 pkgname=midgard2-core
 pkgver=2.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Midgard2 core framework"
 url="http://www.midgard-project.org"
 license="GPL"
@@ -10,13 +10,14 @@ conflicts=()
 replaces=()
 backup=()
 install=
-source=("http://www.midgard-project.org/midcom-serveattachmentguid-f44f98c242a811ddb978a144bed5f558f558/midgard-core-2.0.0alpha2.tar.bz2")
+#source=("http://www.midgard-project.org/midcom-serveattachmentguid-f44f98c242a811ddb978a144bed5f558f558/midgard-core-2.0.0alpha2.tar.bz2")
 md5sums=()
 arch=('i686')
 
 build() {
-    cd $startdir/src/midgard-core-2.0.0alpha2/
-    ./configure --prefix=/usr/
+    svn co https://svn.midgard-project.org/midgard/trunk/midgard/core/midgard/ midgard-core
+    cd $startdir/src/midgard-core/
+    ./autogen.sh --prefix=/usr/
     make
     make DESTDIR=$startdir/pkg/ install
 }
